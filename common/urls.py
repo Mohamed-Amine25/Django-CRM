@@ -2,6 +2,8 @@ from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 from django.contrib.auth import views as auth_views
 from django.urls import path
+from .views import register
+
 
 from common import views
 
@@ -18,6 +20,7 @@ urlpatterns = [
     # GoogleLoginView
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('register/', register, name='register'),
     path("org/", views.OrgProfileCreateView.as_view()),
     path("profile/", views.ProfileView.as_view()),
     path("users/get-teams-and-users/", views.GetTeamsAndUsersView.as_view()),

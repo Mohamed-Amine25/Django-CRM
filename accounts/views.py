@@ -55,6 +55,22 @@ from opportunity.serializer import OpportunitySerializer
 from tasks.serializer import TaskSerializer
 from teams.models import Teams
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from .forms import UserRegistrationForm
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Optionally, log the user in after registration
+            login(request, user)
+            return redirect('home')  # Redirect to a home page or another appropriate page
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
 
 class AccountsListView(APIView, LimitOffsetPagination):
     #authentication_classes = (CustomDualAuthentication,)
